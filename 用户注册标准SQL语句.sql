@@ -21,7 +21,7 @@ CREATE TABLE staff (
   KEY `idx_create_time`(`create_time`,`user_review_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='网站用户基本信息';
 
-CREATE TABLE `staff_log` (
+CREATE TABLE `staff_login` (
   `id` bigint(10) NOT NULL AUTO_INCREMENT,
   `work_num` bigint(10) NOT NULL default '0' COMMENT '工号',
   `nickname` varchar(45) NOT NULL default '' COMMENT '昵称',
@@ -29,11 +29,11 @@ CREATE TABLE `staff_log` (
   `avatar` varchar(200) NOT NULL default '0' COMMENT '头像图片存放地址',
   `short_introduce` varchar(150) not null DEFAULT '' COMMENT '一句话介绍自己，最多50个汉字',
   `user_register_ip` int NOT NULL COMMENT '用户注册时的源ip',
+  `user_review_status` tinyint NOT NULL default '1' COMMENT '账户激活状态，1为已激活，2为未激活',
   `create_time` datetime NOT NULL default current_timestamp COMMENT '用户记录创建的时间',
   `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '用户资料修改的时间',
   `delete_time` datetime default null COMMENT '软删除标记',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uq_user_id` (`user_id`),
   KEY `idx_username`(`username`),
   KEY `idx_create_time`(`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工登录信息';
