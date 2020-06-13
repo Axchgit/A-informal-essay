@@ -14,3 +14,9 @@ composer require phpoffice/phpexcel
 6.安装PHPMail
 composer require phpmailer/phpmailer
 授权码：jymsvcmwcmrbbfcj
+
+7.安装验证码类库
+composer require topthink/think-captcha
+
+8.安装跳转方法
+composer require liliuwei/thinkphp-jump
