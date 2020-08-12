@@ -38,6 +38,21 @@ CREATE TABLE `staff_login` (
   KEY `idx_create_time`(`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工登录信息';
 
+CREATE TABLE `admin` (
+  `id` bigint(10) NOT NULL AUTO_INCREMENT,
+  `real_name` varchar(20) NOT NULL default '' COMMENT '姓名',
+  `password` char(32) NOT NULL default '' COMMENT '登录密码',
+  `phone_number` char(11) NOT NULL default '' COMMENT '手机号',
+  `email` varchar(30) NOT NULL default '' COMMENT '邮箱',
+  -- `register_ip` varchar(30) NOT NULL default '' COMMENT '用户注册时的源ip',
+  `login_ip` varchar(30) NOT NULL default '' COMMENT '登录ip',
+  `account_status` tinyint NOT NULL default '1' COMMENT '账户状态，1为启用，2为禁用',
+  `permission` tinyint NOT NULL default '1' COMMENT '账户权限等级',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '创建时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '资料修改时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
 
 
@@ -56,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 CREATE TABLE staff (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `work_num` bigint(20) NOT NULL default '0' COMMENT '工号',
-  `username` varchar(45) NOT NULL default '' COMMENT '真实姓名',
+  `real_name` varchar(45) NOT NULL default '' COMMENT '真实姓名',
   `email` varchar(30) NOT NULL default '' COMMENT '用户邮箱',
   -- `nickname` varchar(45) NOT NULL default '' COMMENT '昵称',
   `avatar` varchar(200) NOT NULL default '' COMMENT '证件照存放地址',
