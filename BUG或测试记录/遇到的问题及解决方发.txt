@@ -20,3 +20,17 @@ composer require topthink/think-captcha
 
 8.安装跳转方法
 composer require liliuwei/thinkphp-jump
+
+9.vue-cli配置文件不生效 / .env配置更改不生效
+重启服务即可
+
+10.d2-admin跨域请求失败
+.env配置与vue.config配置冲突
+
+.env删除配置语句:
+```# 网络请求公用地址
+VUE_APP_API=/api/test/2432```
+
+11.thinkphp 返回值为数组会报错:variable type error： array
+
+return json($arr);  把数组作为json数据返回就可以了
