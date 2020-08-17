@@ -34,3 +34,11 @@ VUE_APP_API=/api/test/2432```
 11.thinkphp 返回值为数组会报错:variable type error： array
 
 return json($arr);  把数组作为json数据返回就可以了
+
+12.安装jwt
+composer require firebase/php-jwt
+
+13.出现PDO错误,大概率是数据库没有开(wampserve)
+
+14.报错:A non-numeric value encountered
+原因数值类型混合运算,一般是因为连字符写成 '+' 号,php连字符应该是 ' . '

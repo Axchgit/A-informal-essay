@@ -128,3 +128,65 @@ CREATE TABLE staff (
   KEY `idx_create_time`(`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工业绩表';
 
+
+
+/***********************ep_api******************/
+
+
+
+CREATE TABLE IF NOT EXISTS `admin`(
+	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '全球唯一标识符',
+	`admin_name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '管理员账号',
+	`admin_pass` CHAR(32) NOT NULL DEFAULT '' COMMENT '管理员密码',
+	`admin_email` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '管理员电子邮箱',
+  `admin_phone` char(11) NOT NULL default '' COMMENT '手机号',
+  `rule` tinyint NOT NULL default '5' COMMENT '权限等级',
+	`logintime'` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT '登陆时间',
+	`loginip` BIGINT NOT NULL DEFAULT '0' COMMENT '登陆IP',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改的时间',
+	PRIMARY KEY(`id`),
+	UNIQUE admin_adminname_adminpass(`admin_name`,`admin_pass`),
+	UNIQUE admin_adminname_adminemail(`admin_name`,`admin_email`),
+	UNIQUE admin_adminname_adminphone(`admin_name`,`admin_phone`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员表';
+
+
+CREATE TABLE IF NOT EXISTS `temp_code`(
+	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '账户全球唯一标识符',
+  `code` varchar(10) NOT NULL default '' COMMENT '验证码',
+	`msg` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '备注信息',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+	PRIMARY KEY(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='存储验证码临时表';
+
+
+
+CREATE TABLE IF NOT EXISTS employee (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '账户全球唯一标识符',
+  `work_num` bigint(20) NOT NULL default '0' COMMENT '工号',
+  `real_name` varchar(45) NOT NULL default '' COMMENT '真实姓名',
+  `email` varchar(30) NOT NULL default '' COMMENT '用户邮箱',
+  -- `nickname` varchaid_photor(45) NOT NULL default '' COMMENT '昵称',
+  `id_photo` varchar(200) NOT NULL default '' COMMENT '证件照存放地址',
+  `id_card` varchar(18) NOT NULL default '' COMMENT '身份证号',
+  `bank_card` varchar(18) NOT NULL default '' COMMENT '银行卡',
+  `birthday` date NOT NULL COMMENT '生日',
+  `sex` tinyint(4) not null DEFAULT '0' COMMENT '性别：1为男性，2为女性',
+  `rule` tinyint NOT NULL default '5' COMMENT '权限等级',
+	`logintime` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT '登陆时间',
+	`loginip` BIGINT NOT NULL DEFAULT '0' COMMENT '登陆IP',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '用户记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '用户资料修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记'
+  `user_review_status` tinyint NOT NULL default '1' COMMENT '用户资料审核状态，1为通过，2为审核中，3为未通过，4为还未提交审核',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_work_num` (`work_num`),
+  KEY `idx_uuid`(`uuid`),
+  KEY `idx_create_time`(`create_time`,`user_review_status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工信息表';
+插入示例
+INSERT INTO `employee` (`id`, `uuid`, `work_num`, `real_name`, `email`, `id_photo`, `id_card`, `bank_card`, `birthday`, `sex`, `rule`, `logintime`, `loginip`, `create_time`, `update_time`, `delete_time`, `user_review_status`) VALUES (NULL, 'E6AE433A-0810-F991-FDCF-50E7ED5F36F4', '20190008', '盖伦', 'gailun@qq.com', 'dfd', 'fsdf', 'fsdf', '2020-08-17', '0', '5', '0', '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, '1');
