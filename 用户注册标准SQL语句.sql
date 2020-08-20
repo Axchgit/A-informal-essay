@@ -164,12 +164,13 @@ CREATE TABLE IF NOT EXISTS `temp_code`(
 
 
 
-CREATE TABLE IF NOT EXISTS employee (
+CREATE TABLE IF NOT EXISTS `employee` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '账户全球唯一标识符',
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '员工全球唯一标识符',
   `work_num` bigint(20) NOT NULL default '0' COMMENT '工号',
   `real_name` varchar(45) NOT NULL default '' COMMENT '真实姓名',
   `email` varchar(30) NOT NULL default '' COMMENT '用户邮箱',
+  `phone_num` char(11) NOT NULL default '' COMMENT '手机号',
   -- `nickname` varchaid_photor(45) NOT NULL default '' COMMENT '昵称',
   `id_photo` varchar(200) NOT NULL default '' COMMENT '证件照存放地址',
   `id_card` varchar(18) NOT NULL default '' COMMENT '身份证号',
@@ -177,16 +178,45 @@ CREATE TABLE IF NOT EXISTS employee (
   `birthday` date NOT NULL COMMENT '生日',
   `sex` tinyint(4) not null DEFAULT '0' COMMENT '性别：1为男性，2为女性',
   `rule` tinyint NOT NULL default '5' COMMENT '权限等级',
-	`logintime` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT '登陆时间',
-	`loginip` BIGINT NOT NULL DEFAULT '0' COMMENT '登陆IP',
-  `create_time` datetime NOT NULL default current_timestamp COMMENT '用户记录创建的时间',
-  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '用户资料修改的时间',
+	-- `logintime` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT '登陆时间',
+	-- `loginip` BIGINT NOT NULL DEFAULT '0' COMMENT '登陆IP',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '资料修改的时间',
   `delete_time` datetime default null COMMENT '软删除标记'
-  `user_review_status` tinyint NOT NULL default '1' COMMENT '用户资料审核状态，1为通过，2为审核中，3为未通过，4为还未提交审核',
+  -- `user_review_status` tinyint NOT NULL default '1' COMMENT '用户资料审核状态，1为通过，2为审核中，3为未通过，4为还未提交审核',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_work_num` (`work_num`),
   KEY `idx_uuid`(`uuid`),
-  KEY `idx_create_time`(`create_time`,`user_review_status`)
+  KEY `idx_create_time`(`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工信息表';
 插入示例
-INSERT INTO `employee` (`id`, `uuid`, `work_num`, `real_name`, `email`, `id_photo`, `id_card`, `bank_card`, `birthday`, `sex`, `rule`, `logintime`, `loginip`, `create_time`, `update_time`, `delete_time`, `user_review_status`) VALUES (NULL, 'E6AE433A-0810-F991-FDCF-50E7ED5F36F4', '20190008', '盖伦', 'gailun@qq.com', 'dfd', 'fsdf', 'fsdf', '2020-08-17', '0', '5', '0', '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, '1');
+INSERT INTO `employee` (`id`, `uuid`, `work_num`, `real_name`, `email`, `id_photo`, `id_card`, `bank_card`, `birthday`, `sex`, `rule`, `logintime`, `loginip`, `create_time`, `update_time`, `delete_time`, `user_review_status`) VALUES (NULL, '0E9E7A54-884F-28CC-E7EC-921CB90ADB6E', '20190011', '亚索', 'yasuo@qq.com', 'dfd', 'fsdf', 'fsdf', '2020-08-17', '0', '5', '0', '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, '1');
+
+
+CREATE TABLE IF NOT EXISTS `employee_login` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '员工全球唯一标识符',
+  `nick_name` varchar(45) NOT NULL default '学创科技' COMMENT '昵称',
+  `password` varchar(32) NOT NULL default '' COMMENT '登录密码',
+  `avatar` varchar(500) NOT NULL default 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597857354740&di=97daf3372b74d33f746b3186922c7757&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Ff1f9819b050372ab9a18cc9999cf0113647d59375bc7-8xm4Ca_fw658' COMMENT '头像',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '资料修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记'
+  `user_review_status` tinyint NOT NULL default '2' COMMENT '用户资料审核状态，1为通过，2为审核中，3为未通过，4为还未提交审核',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_uuid` (`uuid`),
+  KEY `idx_uuid`(`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工账户表';
+
+
+
+CREATE TABLE IF NOT EXISTS `login_record` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '账户全球唯一标识符',
+	`login_time` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT '登录时间',
+	`login_ip` BIGINT NOT NULL DEFAULT '0' COMMENT '登录IP',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改的时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_uuid`(`uuid`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录记录表';
