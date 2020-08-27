@@ -42,3 +42,29 @@ composer require firebase/php-jwt
 
 14.报错:A non-numeric value encountered
 原因数值类型混合运算,一般是因为连字符写成 '+' 号,php连字符应该是 ' . '
+
+15.报错:strict_types declaration must be the very first statement in the script
+原因:用记事本更改后保存php文件
+
+16.thinkphp访问出错:No input file specified.
+设置伪静态参数
+
+  RewriteRule ^(.*)$ index.php?/$1 [QSA,PT,L]
+  (index.php后面加'?')
+
+17.thinkphp6.0+vue-cli项目部署到服务器(phpstudy)注意事项
+  thinkphp项目public根目录设置为网站根目录
+  vue-cli打包后的dist里的文件放入public中
+  设置网站主页为index.html(确保访问网站主页为dist里的index.html)
+  设置伪静态 --16条
+  thinkphp不能获取请求头信息:
+    在public目录下的 .htaccess(或者在网站设置里-伪静态)里添加
+      # Handle Authorization Header
+      RewriteCond %{HTTP:Authorization} .
+      RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+      .htaccess此文件即为网站伪静态设置 ,第16条设置也可在此文件内设置
+
+18.vue-cli项目报错:Uncaught SyntaxError: Unexpected token '*'
+根目录设置问题 
+
