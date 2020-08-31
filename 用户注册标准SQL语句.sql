@@ -220,3 +220,62 @@ CREATE TABLE IF NOT EXISTS `login_record` (
   PRIMARY KEY (`id`),
   KEY `idx_uuid`(`uuid`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录记录表';
+
+CREATE TABLE IF NOT EXISTS `goods` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `order_id` varchar(30) NOT NULL default '' COMMENT '订单号',
+  `f_order_id` varchar(30) default '' COMMENT '父单号',
+  `order_status` varchar(15) NOT NULL default '' COMMENT '订单状态',
+  `payment_time` datetime NOT NULL COMMENT '下单时间',
+  `goods_id` bigint(20) NOT NULL default 0 COMMENT '商品ID',
+  `goods_name` varchar(200) NOT NULL default '' COMMENT '商品名称',
+  `shop_name` varchar(30) NOT NULL default '' COMMENT '商品店铺名称',
+  `goods_number` int(10) NOT NULL default 0 COMMENT '商品数量',
+  `after_sale_number` int(10) NOT NULL default 0 COMMENT '商品售后中数量',
+  `return_goods_number` int(10) NOT NULL default 0 COMMENT '商品已退货数量',
+  `is_same_shop` varchar(4) NOT NULL default '' COMMENT '同跨店',
+  `payment_amount` int(10) NOT NULL default 0 COMMENT '付款金额',
+  `commission_rate` int(5) NOT NULL default 0 COMMENT '佣金比例',
+  `division_proportion` int(5) NOT NULL default 0 COMMENT '分成比例',
+  `expec_amount` int(10) NOT NULL default 0 COMMENT '预估金额',
+  `expec_commission` int(10) NOT NULL default 0 COMMENT '预估佣金',
+  `actual_amount` int(10) NOT NULL default 0 COMMENT '实际金额',
+  `actual_commission` int(10) NOT NULL default 0 COMMENT '实际佣金',
+  `settlement_information` varchar(50) NOT NULL default '' COMMENT '结算信息',
+  `order_platform` varchar(10) NOT NULL default '' COMMENT '下单平台',
+  `is_plus` varchar(5) NOT NULL default '' COMMENT 'plus订单',
+  `promotion_position_id` varchar(30) NOT NULL default '' COMMENT '推广位ID',
+  `promotion_position_name` varchar(50) NOT NULL default '' COMMENT '推广位名称',
+  `PID` varchar(30) NOT NULL default '' COMMENT 'PID',
+  `third_party_position` varchar(50) NOT NULL default '' COMMENT '第三方服务平台',
+  `website_id` varchar(30) NOT NULL default '' COMMENT '网站ID',
+  `promotion_role` varchar(10) NOT NULL default '' COMMENT '推广角色',
+  `group_activity_id` varchar(30) NOT NULL default '' COMMENT '团活动ID',
+  `group_activity_name` varchar(50) NOT NULL default '' COMMENT '团活动名称',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_order_id` (`order_id`),
+  KEY `idx_goods_id`(`goods_id`),
+  KEY `idx_order_id`(`order_id`),
+  KEY `idx_create_time`(`create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='推广商品明细表';
+
+
+
+-- DROP TABLE IF EXISTS `achievement`;
+CREATE TABLE IF NOT EXISTS `performance` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '员工全球唯一标识符',
+  -- `work_num` varchar(5) NOT NULL DEFAULT '0' COMMENT '工号',
+  `goods_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '商品ID',
+  `audit_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '审核状态，0为正在审核，1为审核通过，2为未通过',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建的时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_performance` (`uuid`,`goods_id`),
+  KEY `idx_work_num` (`work_num`),
+  KEY `idx_goods_id` (`goods_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='员工业绩表';
