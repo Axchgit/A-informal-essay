@@ -221,12 +221,13 @@ CREATE TABLE IF NOT EXISTS `login_record` (
   KEY `idx_uuid`(`uuid`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录记录表';
 
+DROP TABLE IF EXISTS `goods`;
 CREATE TABLE IF NOT EXISTS `goods` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `order_id` varchar(30) NOT NULL default '' COMMENT '订单号',
   `f_order_id` varchar(30) default '' COMMENT '父单号',
   `order_status` varchar(15) NOT NULL default '' COMMENT '订单状态',
-  `payment_time` datetime NOT NULL COMMENT '下单时间',
+  `payment_time` varchar(20) NOT NULL COMMENT '下单时间',
   `goods_id` bigint(20) NOT NULL default 0 COMMENT '商品ID',
   `goods_name` varchar(200) NOT NULL default '' COMMENT '商品名称',
   `shop_name` varchar(30) NOT NULL default '' COMMENT '商品店铺名称',
@@ -241,6 +242,7 @@ CREATE TABLE IF NOT EXISTS `goods` (
   `expec_commission` int(10) NOT NULL default 0 COMMENT '预估佣金',
   `actual_amount` int(10) NOT NULL default 0 COMMENT '实际金额',
   `actual_commission` int(10) NOT NULL default 0 COMMENT '实际佣金',
+
   `settlement_information` varchar(50) NOT NULL default '' COMMENT '结算信息',
   `order_platform` varchar(10) NOT NULL default '' COMMENT '下单平台',
   `is_plus` varchar(5) NOT NULL default '' COMMENT 'plus订单',
@@ -252,11 +254,21 @@ CREATE TABLE IF NOT EXISTS `goods` (
   `promotion_role` varchar(10) NOT NULL default '' COMMENT '推广角色',
   `group_activity_id` varchar(30) NOT NULL default '' COMMENT '团活动ID',
   `group_activity_name` varchar(50) NOT NULL default '' COMMENT '团活动名称',
+
+  `salesman_commission` int(10) NOT NULL default '0' COMMENT '推手佣金',
+  `leader_nickname` varchar(45) NOT NULL default '' COMMENT '招商团长昵称',
+  `leader_duoid` bigint(20) NOT NULL default '0' COMMENT '招商duoid',
+  `salesman_nickname` varchar(45) NOT NULL default '' COMMENT '推手昵称',
+  `salesman_duoid` bigint(20) NOT NULL default '0' COMMENT '推手duoid',
+
+
+  `platform` varchar(5) NOT NULL default '0' COMMENT '电商平台',
+
   `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
   `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改的时间',
   `delete_time` datetime default null COMMENT '软删除标记',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uq_order_id` (`order_id`),
+  -- UNIQUE KEY `uq_order_id` (`order_id`),
   KEY `idx_goods_id`(`goods_id`),
   KEY `idx_order_id`(`order_id`),
   KEY `idx_create_time`(`create_time`)
