@@ -73,4 +73,9 @@ composer require firebase/php-jwt
 20.vue-frame菜单图标 引用时名字去掉fa
 
 
+21.thinkphp php think run 启动不了,文件方法报错
+更新语句 composer update topthink/framework
+
+
+
 
