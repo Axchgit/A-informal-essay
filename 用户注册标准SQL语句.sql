@@ -177,13 +177,13 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `bank_card` varchar(18) NOT NULL default '' COMMENT '银行卡',
   `birthday` date NOT NULL COMMENT '生日',
   `sex` tinyint(4) not null DEFAULT '0' COMMENT '性别：1为男性，2为女性',
-  `rule` tinyint NOT NULL default '5' COMMENT '权限等级',
+  `role` tinyint NOT NULL default '5' COMMENT '权限等级',
 	-- `logintime` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT '登陆时间',
 	-- `loginip` BIGINT NOT NULL DEFAULT '0' COMMENT '登陆IP',
   `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
   `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '资料修改的时间',
   `delete_time` datetime default null COMMENT '软删除标记'
-  -- `user_review_status` tinyint NOT NULL default '1' COMMENT '用户资料审核状态，1为通过，2为审核中，3为未通过，4为还未提交审核',
+  `review_status` tinyint NOT NULL default '1' COMMENT '账户激活状态，1为通过，2为审核中，3为未通过',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_work_num` (`work_num`),
   KEY `idx_uuid`(`uuid`),
@@ -197,12 +197,13 @@ CREATE TABLE IF NOT EXISTS `employee_login` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '员工全球唯一标识符',
   `nick_name` varchar(45) NOT NULL default '学创科技' COMMENT '昵称',
+  `profile` varchar(300) default '学创科技员工' COMMENT '个人介绍',
   `password` varchar(32) NOT NULL default '' COMMENT '登录密码',
   `avatar` varchar(500) NOT NULL default 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597857354740&di=97daf3372b74d33f746b3186922c7757&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Ff1f9819b050372ab9a18cc9999cf0113647d59375bc7-8xm4Ca_fw658' COMMENT '头像',
   `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
   `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '资料修改的时间',
   `delete_time` datetime default null COMMENT '软删除标记'
-  `user_review_status` tinyint NOT NULL default '2' COMMENT '用户资料审核状态，1为通过，2为审核中，3为未通过，4为还未提交审核',
+  -- `user_review_status` tinyint NOT NULL default '2' COMMENT '用户资料审核状态，1为通过，2为审核中，3为未通过，4为还未提交审核',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_uuid` (`uuid`),
   KEY `idx_uuid`(`uuid`)
@@ -291,3 +292,42 @@ CREATE TABLE IF NOT EXISTS `performance` (
   KEY `idx_work_num` (`work_num`),
   KEY `idx_goods_id` (`goods_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='员工业绩表';
+
+
+DROP TABLE IF EXISTS `employee_leave`;
+CREATE TABLE IF NOT EXISTS `employee_leave` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '账户全球唯一标识符',
+  `category` tinyint NOT NULL default 1 COMMENT '请假类别,1为事假,2为病假,3为产假,4为婚假,5为丧假,6为年假',
+  `reason` varchar(300) NOT NULL default '' COMMENT '具体事由',
+	`start_time` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT '开始时间',
+	`end_time` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT '结束时间',
+	`duration` INT UNSIGNED NOT NULL DEFAULT '0' COMMENT '持续时间(秒数)',
+  `agent` varchar(5) NOT NULL default '0' COMMENT '工作代理人工号',  
+  `review_status` tinyint NOT NULL default '1' COMMENT '审核状态，1为通过，2为审核中，3为未通过',
+  `reviewer` VARCHAR(36) NOT NULL default '' COMMENT '审核人员',       
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+  KEY `idx_uuid`(`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工请假';
+
+
+DROP TABLE IF EXISTS `quit`;
+CREATE TABLE IF NOT EXISTS `employee_quit` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '账户全球唯一标识符',
+  `category` tinyint NOT NULL default 1 COMMENT '离职类别,1为辞职,2为辞退,3为其他',
+  `reason` varchar(300) NOT NULL default '' COMMENT '离职理由',
+	`estimated_time` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '预计离职时间',
+  `agent` varchar(5) NOT NULL default '0' COMMENT '工作代理人',  
+  `review_status` tinyint NOT NULL default 1 COMMENT '审核状态，1为通过，2为审核中，3为未通过',
+  `reviewer` VARCHAR(36) NOT NULL default '' COMMENT '审核人员',   
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+  KEY `idx_uuid`(`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工离职';
+
