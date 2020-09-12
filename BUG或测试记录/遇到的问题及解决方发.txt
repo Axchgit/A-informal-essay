@@ -76,6 +76,7 @@ composer require firebase/php-jwt
 21.thinkphp php think run 启动不了,文件方法报错
 更新语句 composer update topthink/framework
 
+22.git测试
 
 
 
