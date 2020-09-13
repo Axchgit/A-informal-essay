@@ -336,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '账户全球唯一标识符',
   `category` tinyint NOT NULL default 1 COMMENT '反馈类别,1为系统,2为业务,3为公司,4为其他',
-  `reason` varchar(300) NOT NULL default '' COMMENT '具体事项',  
+  `matter` varchar(300) NOT NULL default '' COMMENT '具体事项',  
   `exact_date` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '问题日期',
   `process_status` tinyint NOT NULL default 1 COMMENT '处理状态，1为处理中，2为已处理，3为已核查',
   `handler` VARCHAR(36) NOT NULL default '' COMMENT '处理人员',   
