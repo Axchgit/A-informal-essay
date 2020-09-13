@@ -314,14 +314,14 @@ CREATE TABLE IF NOT EXISTS `employee_leave` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工请假';
 
 
-DROP TABLE IF EXISTS `quit`;
+DROP TABLE IF EXISTS `employee_quit`;
 CREATE TABLE IF NOT EXISTS `employee_quit` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
 	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '账户全球唯一标识符',
   `category` tinyint NOT NULL default 1 COMMENT '离职类别,1为辞职,2为辞退,3为其他',
   `reason` varchar(300) NOT NULL default '' COMMENT '离职理由',
 	`estimated_time` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '预计离职时间',
-  `agent` varchar(5) NOT NULL default '0' COMMENT '工作代理人',  
+  `agent` varchar(10) NOT NULL default '0' COMMENT '工作代理人',  
   `review_status` tinyint NOT NULL default 1 COMMENT '审核状态，1为通过，2为审核中，3为未通过',
   `reviewer` VARCHAR(36) NOT NULL default '' COMMENT '审核人员',   
   `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
@@ -330,4 +330,22 @@ CREATE TABLE IF NOT EXISTS `employee_quit` (
   PRIMARY KEY (`id`),
   KEY `idx_uuid`(`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工离职';
+
+DROP TABLE IF EXISTS `feedback`;
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '账户全球唯一标识符',
+  `category` tinyint NOT NULL default 1 COMMENT '反馈类别,1为系统,2为业务,3为公司,4为其他',
+  `reason` varchar(300) NOT NULL default '' COMMENT '具体事项',  
+  `exact_date` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '问题日期',
+  `process_status` tinyint NOT NULL default 1 COMMENT '处理状态，1为处理中，2为已处理，3为已核查',
+  `handler` VARCHAR(36) NOT NULL default '' COMMENT '处理人员',   
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+  KEY `idx_uuid`(`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='信息反馈';
+
+
 
