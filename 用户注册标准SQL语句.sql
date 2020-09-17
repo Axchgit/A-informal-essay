@@ -398,3 +398,54 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS `person_account` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+	-- `uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '员工全球唯一标识符',
+  `number` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '学工号',
+  `nick_name` varchar(45) NOT NULL default '同志' COMMENT '昵称',
+  `profile` varchar(300) default '申请入党人员' COMMENT '个人介绍',
+  `password` varchar(32) NOT NULL default '' COMMENT '登录密码',
+  `id_photo` varchar(500) NOT NULL default 'https://c-ssl.duitang.com/uploads/item/201603/06/20160306204517_i4Se8.jpeg' COMMENT '头像',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '资料修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  -- `user_review_status` tinyint NOT NULL default '2' COMMENT '用户资料审核状态，1为通过，2为审核中，3为未通过，4为还未提交审核',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_number` (`number`),
+  KEY `idx_number`(`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人员账户表';
