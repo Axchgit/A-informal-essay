@@ -432,12 +432,11 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 
 
 
-
+DROP TABLE IF EXISTS `person_account`;
 CREATE TABLE IF NOT EXISTS `person_account` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
 	-- `uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '员工全球唯一标识符',
   `number` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '学工号',
-  `nick_name` varchar(45) NOT NULL default '同志' COMMENT '昵称',
   `profile` varchar(300) default '申请入党人员' COMMENT '个人介绍',
   `password` varchar(32) NOT NULL default '' COMMENT '登录密码',
   `id_photo` varchar(500) NOT NULL default 'https://c-ssl.duitang.com/uploads/item/201603/06/20160306204517_i4Se8.jpeg' COMMENT '头像',
