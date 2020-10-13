@@ -78,5 +78,11 @@ composer require firebase/php-jwt
 
 22.git测试
 
+23.找不到用户数据/登录出错,用户数据在数据库里存在
+启用了软删除,被标记后使用find查询查不到数据
+
+24.vue-sys找不到页面
+路由path关键字错误
+
 
 

@@ -429,22 +429,138 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 
 
 
+/******************************** party_api***********************/
+`1	文学与传媒学院
+	
+2	马克思主义学院
+	
+3	外国语学院
+	
+4	数学与统计学院
+	
+5	物理与机电工程学院
+	
+6	化学与生物工程学院
+	
+7	计算机与信息工程学院
+	
+8	体育学院
+	
+9	教师教育学院
+	
+10	音乐舞蹈学院
+	
+11	经济与管理学院
+	
+12	历史社会学院
+	
+13	美术与设计学院`
 
+DROP TABLE IF EXISTS `person`;
+CREATE TABLE IF NOT EXISTS `person` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `number` bigint(20) NOT NULL DEFAULT '0' COMMENT '学工号',
+  `faculty` char(2) NOT NULL DEFAULT '' COMMENT '学院代码',
+  `major` varchar(30) NOT NULL DEFAULT '' COMMENT '专业',
+  `grade` varchar(10) NOT NULL DEFAULT '' COMMENT '年级',
+  `class` varchar(10) NOT NULL DEFAULT '' COMMENT '班级',
+  `name` varchar(15) NOT NULL DEFAULT '' COMMENT '姓名',
+  `sex` tinyint(4) NOT NULL DEFAULT '0' COMMENT '性别：1为男性，2为女性',
+  `political_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '政治面貌:1为群众,2为共青团员,3为苗子,4为积极分子,5为发展对象,6为预备党员,7为正式党员',
+  
+  `nation` varchar(15) NOT NULL DEFAULT '' COMMENT '民族',
+  `native_place` varchar(10) NOT NULL DEFAULT '' COMMENT '籍贯',
+  `id_card` varchar(18) NOT NULL DEFAULT '' COMMENT '身份证号',
+  `education` varchar(10) NOT NULL DEFAULT '' COMMENT '学历',
+  `post` varchar(30) NOT NULL DEFAULT '' COMMENT '职务',
+  `phone_number` char(11) NOT NULL DEFAULT '' COMMENT '手机号',
+  `email` varchar(50) NOT NULL DEFAULT '' COMMENT '邮箱',
+  `role` tinyint(4) NOT NULL DEFAULT '9' COMMENT '权限等级',
+  `active_state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '账户激活状态：0为未激活，1为已激活',
+  `remarks` varchar(10) NOT NULL DEFAULT '' COMMENT '备注',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建的时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '资料修改的时间',
+  `delete_time` datetime DEFAULT NULL COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_number` (`number`),
+  KEY `idx_create_time` (`create_time`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='人员信息表';
 
+--
+-- 转存表中的数据 `person`
+--
+
+INSERT INTO `person` (`id`, `number`, `faculty`, `major`, `grade`, `class`, `name`, `sex`, `nation`, `native_place`, `id_card`, `education`, `post`, `phone_number`, `email`, `role`, `active_state`, `comment`, `create_time`, `update_time`, `delete_time`) VALUES
+(1, 2017107228, '07', '计算机科学与技术', '2017', '1', '邢晨浩', 1, '汉', '', '411625199710067970', '本科', '学生', '13117687671', '928156263@qq.com', 8, 1, '无', '2020-09-16 12:38:49', '2020-09-17 12:34:33', NULL),
+(2, 2017107216, '07', '计算机科学与技术', '2017', '1', '罗曼', 2, '汉', '', '411625199710067971', '本科', '学生', '13117684283', '928156263@qq.com', 8, 0, '无', '2020-09-16 12:38:49', '2020-09-16 12:38:49', NULL),
+(3, 20170001, '07', '计算机科学与技术', '2017', '1', '张三', 1, '汉', '', '411625199710067972', '本科', '教师', '13117687672', '928156263@qq.com', 6, 1, '无', '2020-09-16 12:38:49', '2020-09-17 12:26:56', NULL);
+
+-- --------------------------------------------------------
+--
+-- 表的结构 `person_account`
+--
 
 DROP TABLE IF EXISTS `person_account`;
 CREATE TABLE IF NOT EXISTS `person_account` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-	-- `uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '员工全球唯一标识符',
   `number` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '学工号',
-  `profile` varchar(300) default '申请入党人员' COMMENT '个人介绍',
-  `password` varchar(32) NOT NULL default '' COMMENT '登录密码',
-  `id_photo` varchar(500) NOT NULL default 'https://c-ssl.duitang.com/uploads/item/201603/06/20160306204517_i4Se8.jpeg' COMMENT '头像',
+  `profile` varchar(300) DEFAULT '申请入党人员' COMMENT '个人介绍',
+  `password` varchar(32) NOT NULL DEFAULT '' COMMENT '登录密码',
+  `id_photo` varchar(500) NOT NULL DEFAULT 'https://c-ssl.duitang.com/uploads/item/201603/06/20160306204517_i4Se8.jpeg' COMMENT '头像',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建的时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '资料修改的时间',
+  `delete_time` datetime DEFAULT NULL COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_number` (`number`),
+  KEY `idx_number` (`number`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='人员账户表';
+
+--
+-- 转存表中的数据 `person_account`
+--
+
+INSERT INTO `person_account` (`id`, `number`, `profile`, `password`, `id_photo`, `create_time`, `update_time`, `delete_time`) VALUES
+(1, 20170001, '申请入党人员', '1110', 'https://c-ssl.duitang.com/uploads/item/201603/06/20160306204517_i4Se8.jpeg', '2020-09-17 12:26:56', '2020-09-17 12:26:56', NULL),
+(4, 2017107228, '申请入党人员', '1110', 'https://c-ssl.duitang.com/uploads/item/201603/06/20160306204517_i4Se8.jpeg', '2020-09-17 12:34:33', '2020-09-17 12:34:33', NULL);
+
+-- --------------------------------------------------------
+
+
+DROP TABLE IF EXISTS `material`;
+CREATE TABLE IF NOT EXISTS `material` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `number` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '学工号',
+  `category` tinyint(4) NOT NULL DEFAULT '0' COMMENT '类别:1为党的基本知识01,2为积极分子考核02,3为发展对象考核成绩03,4为入党申请书',
+  `serial_number` varchar(10) NOT NULL DEFAULT 0 COMMENT '编号',  
+  `score` char(3) NOT NULL DEFAULT 0 COMMENT '分数',
+  `remarks` varchar(50) NOT NULL DEFAULT '' COMMENT '备注',  
   `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
   `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '资料修改的时间',
   `delete_time` datetime default null COMMENT '软删除标记',
-  -- `user_review_status` tinyint NOT NULL default '2' COMMENT '用户资料审核状态，1为通过，2为审核中，3为未通过，4为还未提交审核',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uq_number` (`number`),
+  UNIQUE KEY `uq_serial_number` (`serial_number`),
   KEY `idx_number`(`number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='人员账户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='入党资料表';
+
+
+DROP TABLE IF EXISTS `recruit_party_member`;
+CREATE TABLE IF NOT EXISTS `recruit_party_member` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `number` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '学工号',
+  --`political_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '政治面貌:1为群众,2为共青团员,3为苗子,4为积极分子,5为发展对象,6为预备党员,7为正式党员',
+  `stage` tinyint(4) NOT NULL DEFAULT 0 COMMENT '成长阶段:1为申请入党,2为推优育苗,3为团组织推优,4为积极分子,5为发展对象,6为预备党员,7为预备党委审批,8为正式党员,9为正式党委审批',
+  `stage_time` datetime NOT NULL default current_timestamp COMMENT '成长阶段阶段时间',
+  `contacts` varchar(30) NOT NULL DEFAULT '' COMMENT '入党联系人',  
+  `introducer` varchar(30) NOT NULL DEFAULT '' COMMENT '入党介绍人',  
+  `remarks` varchar(50) NOT NULL DEFAULT '' COMMENT '备注',  
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '资料修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+  KEY `idx_number`(`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='发展党员信息表';
+
+
+
+
+
