@@ -467,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `person` (
   `name` varchar(15) NOT NULL DEFAULT '' COMMENT '姓名',
   `sex` tinyint(4) NOT NULL DEFAULT '0' COMMENT '性别：1为男性，2为女性',
   `political_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '政治面貌:1为群众,2为共青团员,3为苗子,4为积极分子,5为发展对象,6为预备党员,7为正式党员',
-  
+  `party_branch` char(3) NOT NULL DEFAULT 0 COMMENT '所在党支部',  
   `nation` varchar(15) NOT NULL DEFAULT '' COMMENT '民族',
   `native_place` varchar(10) NOT NULL DEFAULT '' COMMENT '籍贯',
   `id_card` varchar(18) NOT NULL DEFAULT '' COMMENT '身份证号',
@@ -506,6 +506,8 @@ CREATE TABLE IF NOT EXISTS `person_account` (
   `number` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '学工号',
   `profile` varchar(300) DEFAULT '申请入党人员' COMMENT '个人介绍',
   `password` varchar(32) NOT NULL DEFAULT '' COMMENT '登录密码',
+
+  
   `id_photo` varchar(500) NOT NULL DEFAULT 'https://c-ssl.duitang.com/uploads/item/201603/06/20160306204517_i4Se8.jpeg' COMMENT '头像',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建的时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '资料修改的时间',
