@@ -564,5 +564,21 @@ CREATE TABLE IF NOT EXISTS `recruit_party_member` (
 
 
 
+DROP TABLE IF EXISTS `join_apply`;
+CREATE TABLE IF NOT EXISTS `join_apply` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `number` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '学工号',
+  `step` tinyint(4) NOT NULL DEFAULT 0 COMMENT '步骤:1为申请入党,2为申请成为积极分子,3为申请成为发展对象,4为申请成为预备党员,5为申请成为正式党员',
+  `review_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '审核状态:1为正在审核,2为审核通过,3为未通过',
+  `reviewer` VARCHAR(36) NOT NULL default '' COMMENT '审核人员',
+  `remarks` varchar(50) NOT NULL DEFAULT '' COMMENT '备注',  
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '资料修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+  -- UNIQUE KEY `uq_serial_number` (`serial_number`),
+  KEY `idx_number`(`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='入党申请表';
+
 
 
