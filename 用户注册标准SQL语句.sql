@@ -580,5 +580,30 @@ CREATE TABLE IF NOT EXISTS `join_apply` (
   KEY `idx_number`(`number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='入党申请表';
 
+DROP TABLE IF EXISTS `transfer`;
+CREATE TABLE IF NOT EXISTS `transfer` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `number` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '发起人学工号',
+  `contacts_phone` char(11) NOT NULL DEFAULT '' COMMENT '常用联系人手机号',  
+  `reason` tinyint(4) NOT NULL DEFAULT 0 COMMENT '原因:1为转专业,2为分配错误修正,3为其他',
+  `receive_faculty` char(3) NOT NULL DEFAULT 0 COMMENT '接收学院', 
+  `receive_major` varchar(30) NOT NULL DEFAULT '' COMMENT '转入专业',
+
+  `receive_organization` char(3) NOT NULL DEFAULT 0 COMMENT '接收党支部',  
+
+  `review_steps` tinyint(4) NOT NULL DEFAULT 1 COMMENT '审核步骤:1为转出院级管理员审核,2为转入院级管理员审核,3为校级管理员审核,4为成功',
+  `review_status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '审核状态:1为正在审核,2为审核通过,3为未通过',
+  `out_low_reviewer` VARCHAR(36) NOT NULL default '' COMMENT '院级审核人员',
+  `in_low_reviewer` VARCHAR(36) NOT NULL default '' COMMENT '院级审核人员',
+
+  `high_reviewer` VARCHAR(36) NOT NULL default '' COMMENT '校级审核人员',
+  `remarks` varchar(50) NOT NULL DEFAULT '' COMMENT '备注',  
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+  -- UNIQUE KEY `uq_serial_number` (`serial_number`),
+  KEY `idx_number`(`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织关系转接表';
 
 
