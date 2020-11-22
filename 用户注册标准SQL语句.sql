@@ -586,9 +586,13 @@ CREATE TABLE IF NOT EXISTS `transfer` (
   `number` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '发起人学工号',
   `contacts_phone` char(11) NOT NULL DEFAULT '' COMMENT '常用联系人手机号',  
   `reason` tinyint(4) NOT NULL DEFAULT 0 COMMENT '原因:1为转专业,2为分配错误修正,3为其他',
+  
+  `leave_faculty` char(3) NOT NULL DEFAULT 0 COMMENT '转出学院', 
+  `leave_major` varchar(30) NOT NULL DEFAULT '' COMMENT '转出专业',
+  `leave_organization` char(3) NOT NULL DEFAULT 0 COMMENT '转出党支部',  
+  
   `receive_faculty` char(3) NOT NULL DEFAULT 0 COMMENT '接收学院', 
   `receive_major` varchar(30) NOT NULL DEFAULT '' COMMENT '转入专业',
-
   `receive_organization` char(3) NOT NULL DEFAULT 0 COMMENT '接收党支部',  
 
   `review_steps` tinyint(4) NOT NULL DEFAULT 1 COMMENT '审核步骤:1为转出院级管理员审核,2为转入院级管理员审核,3为校级管理员审核,4为成功',
@@ -605,5 +609,25 @@ CREATE TABLE IF NOT EXISTS `transfer` (
   -- UNIQUE KEY `uq_serial_number` (`serial_number`),
   KEY `idx_number`(`number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织关系转接表';
+
+CREATETABLE`tb_message`(
+`id`bigint(20)UNSIGNEDNOTNULLAUTO_INCREMENT,
+`member_id`int(10)UNSIGNEDNOTNULLCOMMENT'用户ID',
+`type`tinyint(3)UNSIGNEDNOTNULLCOMMENT'消息类型',
+`is_read`bit(1)NOTNULLDEFAULTb'0'COMMENT'是否已读',
+`create_time`timestamp(0)NOTNULLDEFAULTCURRENT_TIMESTAMP(0)COMMENT'创建时间',
+`read_time`timestamp(0)NOTNULLCOMMENT'读取时间',
+`is_delete`bit(1)NOTNULLCOMMENT'是否删除',
+`delete_time`timestamp(0)NOTNULLCOMMENT'删除时间',
+PRIMARYKEY(`id`)USINGBTREE,
+INDEX`member_id`(`member_id`,`is_delete`,`type`,`is_read`,`create_time`)USINGBTREE
+)ENGINE=InnoDBAUTO_INCREMENT=611CHARACTERSET=utf8COLLATE=utf8_general_ciROW_FORMAT=Dynamic;
+
+CREATETABLE`tb_message_ex`(
+`message_id`bigint(20)UNSIGNEDNOTNULLCOMMENT'消息ID',
+`message`textCHARACTERSETutf8COLLATEutf8_general_ciNOTNULLCOMMENT'消息内容',
+`data`textCHARACTERSETutf8COLLATEutf8_general_ciNOTNULLCOMMENT'消息数据',
+PRIMARYKEY(`message_id`)USINGBTREE
+)ENGINE=InnoDBCHARACTERSET=utf8COLLATE=utf8_general_ciROW_FORMAT=Dynamic;
 
 
