@@ -610,6 +610,75 @@ CREATE TABLE IF NOT EXISTS `transfer` (
   KEY `idx_number`(`number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织关系转接表';
 
+
+
+DROP TABLE IF EXISTS `bulletin`;
+CREATE TABLE IF NOT EXISTS `bulletin` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `level` tinyint(4) NOT NULL DEFAULT 0 COMMENT '级别:1为红色,2为橙色,3为黄色,4为白色',
+  `title` varchar(30) NOT NULL DEFAULT '' COMMENT '标题',
+  `content` varchar(500) NOT NULL DEFAULT '' COMMENT '内容',
+  `target_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '通知类型:1为特定用户,2为多个用户,3为用户群体(职务),4为全部',
+  `create_number` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '发布者学工号',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '创建时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改时间',
+  `cancel_time` datetime default null COMMENT '撤回标记',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='通告表';
+
+DROP TABLE IF EXISTS `bulletin_target`;
+CREATE TABLE IF NOT EXISTS `bulletin_target` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `bulletin_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '通告ID',
+  `target_person` varchar(30) NOT NULL DEFAULT '' COMMENT '接收方标识',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '创建时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='通告目标表';
+
+
+DROP TABLE IF EXISTS `bulletin_read`;
+CREATE TABLE IF NOT EXISTS `bulletin_read` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `bulletin_id` bigint(20) NOT NULL DEFAULT 0 COMMENT '通告ID',
+  `target_number` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '阅读人员学工号',
+  `read_time` datetime NOT NULL default current_timestamp COMMENT '创建时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='通告阅读状态表';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 CREATETABLE`tb_message`(
 `id`bigint(20)UNSIGNEDNOTNULLAUTO_INCREMENT,
 `member_id`int(10)UNSIGNEDNOTNULLCOMMENT'用户ID',
@@ -629,5 +698,3 @@ CREATETABLE`tb_message_ex`(
 `data`textCHARACTERSETutf8COLLATEutf8_general_ciNOTNULLCOMMENT'消息数据',
 PRIMARYKEY(`message_id`)USINGBTREE
 )ENGINE=InnoDBCHARACTERSET=utf8COLLATE=utf8_general_ciROW_FORMAT=Dynamic;
-
-
