@@ -653,6 +653,22 @@ CREATE TABLE IF NOT EXISTS `bulletin_read` (
 
 
 
+DROP TABLE IF EXISTS `download_file`;
+CREATE TABLE IF NOT EXISTS `download_file` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `uploader_number` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上传者',
+  `file_category` tinyint(4) NOT NULL DEFAULT '0' COMMENT '类别:1为发展党员第一阶段...5为第五阶段,6为其他',
+  `file_name` varchar(30) NOT NULL DEFAULT 0 COMMENT '文件名',  
+  `file_path` varchar(100) NOT NULL DEFAULT '' COMMENT '文件地址',  
+  `file_remarks` varchar(50) NOT NULL DEFAULT '' COMMENT '文件备注',  
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '资料修改的时间',
+  `delete_time` datetime default null COMMENT '软删除标记',
+  PRIMARY KEY (`id`),
+  -- UNIQUE KEY `uq_serial_number` (`serial_number`),
+  -- KEY `idx_number`(`number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='下载文件表';
+
 
 
 
