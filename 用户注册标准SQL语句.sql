@@ -466,7 +466,7 @@ CREATE TABLE IF NOT EXISTS `person` (
   `class` varchar(10) NOT NULL DEFAULT '' COMMENT '班级',
   `name` varchar(15) NOT NULL DEFAULT '' COMMENT '姓名',
   `sex` tinyint(4) NOT NULL DEFAULT '0' COMMENT '性别：1为男性，2为女性',
-  `political_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '政治面貌:1为群众,2为共青团员,3为苗子,4为积极分子,5为发展对象,6为预备党员,7为正式党员',
+  `political_status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '政治面貌:1为群众,2为共青团员,3为预备党员,4为正式党员',
   `party_branch` char(3) NOT NULL DEFAULT 0 COMMENT '所在党支部',  
   `nation` varchar(15) NOT NULL DEFAULT '' COMMENT '民族',
   `native_place` varchar(10) NOT NULL DEFAULT '' COMMENT '籍贯',
