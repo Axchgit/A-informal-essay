@@ -271,6 +271,19 @@ CREATE TABLE IF NOT EXISTS `login_record` (
   KEY `idx_uuid`(`uuid`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='登录记录表';
 
+DROP TABLE IF EXISTS `auth`;
+CREATE TABLE `auth`  (
+  `qruid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '二维码唯一标识符',
+  `auth_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `auth_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `auth_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `auth_state` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0等待验证，1验证成功，2正在验证，3验证失败（过期）',
+  `user_uuid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '账户唯一标识符',
+  `create_time` datetime NOT NULL default current_timestamp COMMENT '记录创建的时间',
+  `update_time` datetime default current_timestamp on update current_timestamp NOT NULL COMMENT '修改的时间',
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='二维码验证表';
+
+
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE IF NOT EXISTS `goods` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
