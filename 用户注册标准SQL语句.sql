@@ -274,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `login_record` (
 DROP TABLE IF EXISTS `auth`;
 CREATE TABLE `auth`  (
   `qruid` VARCHAR(36) NOT NULL DEFAULT '' COMMENT '二维码唯一标识符',
-  `auth_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `auth_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `auth_ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `auth_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `auth_state` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0等待验证，1验证成功，2正在验证，3验证失败（过期）',
