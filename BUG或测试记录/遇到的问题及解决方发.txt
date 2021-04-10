@@ -98,5 +98,9 @@ composer require firebase/php-jwt
 24.vue-sys找不到页面
 路由path关键字错误
 
+25.vue上传图片插件跨域问题
+请求头添加
+                Accept: 'application/json, text/javascript, */*;'
+
 
 
