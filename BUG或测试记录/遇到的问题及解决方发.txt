@@ -102,5 +102,8 @@ composer require firebase/php-jwt
 请求头添加
                 Accept: 'application/json, text/javascript, */*;'
 
+26.vue-Frame头像加载失败，store里用户数据存储读取失败。（vue-frame和vue-sys一起运行，其中一个会直接跳过登录界面-token重复）
+重复开启服务器，关掉一个解决
+
 
 
